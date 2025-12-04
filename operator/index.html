@@ -20,70 +20,13 @@
       background-color: #f7f8fb; /* BRAND COLOR */
       font-family: "Rubik", sans-serif;
     }
-    /* Collapsed Sidebar */
-    .sidebar {
-      width: 74px; /* CHANGED: Adjusted width */
-      background-color: #003143; /* CHANGED: Darker BG */
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .sidebar .nav-link {
-      color: #CED4DA; 
-      font-weight: 500;
-      border-radius: 8px; /* CHANGED: Rounded block */
-      transition: all 0.3s ease;
-      font-size: 12px;
-      
-      /* CHANGED: Block styling */
-      width: 54px;
-      height: 50px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: row;
-      border-left: 4px solid transparent; /* For active state spacing */
-      margin-bottom: 8px; /* Add spacing between blocks */
-    }
-    .sidebar .nav-link i {
-      font-size: 22px; /* CHANGED: Adjusted icon size */
-      color: #CED4DA;
-      margin-bottom: 0; /* CHANGED: Removed margin */
-    }
-    .sidebar .nav-link:hover {
-      background-color: #8098a1; /* CHANGED: Hover block color */
-      color: #fff;
-    }
-    .sidebar .nav-link:hover i {
-      color: #fff;
-    }
 
-    /* ADDED: Active state styling */
-    .sidebar .nav-link.active {
-      background-color: #8098a1;
-      color: #fff;
-      border-left-color: #156e80; /* Active bar color */
-    }
-    .sidebar .nav-link.active i {
-      color: #fff;
-    }
-
-    /* Tooltip for sidebar names */
-    .sidebar .nav-link[data-bs-toggle="tooltip"] {
-      cursor: pointer;
-    }
-    /* Main content */
+    /* Main content - Adjusted to remove sidebar offset */
     .main-content {
-      margin-left: 94px; /* CHANGED: Adjusted margin */
+      margin-left: 0; 
       padding: 40px;
     }
+
     /* --- BRAND COLOR OVERRIDES --- */
     .main-content h2.text-primary {
       color: #003143 !important; /* BRAND COLOR */
@@ -241,35 +184,9 @@
     /* --- END OF CSS --- */
 
     @media (max-width: 768px) {
-      .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 10px 0;
-      }
       .main-content {
         margin-left: 0;
         padding: 20px;
-      }
-      .sidebar .nav-link {
-        flex-direction: column;
-        font-size: 10px;
-        padding: 5px 0;
-        /* Reset block styling for mobile */
-        width: auto; 
-        height: auto;
-        border-left: none;
-        background-color: transparent;
-      }
-      .sidebar .nav-link.active {
-         border-left: none;
-         background-color: #343a40; /* Keep active bg on mobile */
-      }
-      .sidebar .nav-link i {
-         font-size: 24px; /* Reset icon size */
-         margin-bottom: 4px; /* Add margin back */
       }
       .zenora-intro {
         flex-direction: column;
@@ -301,23 +218,6 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <nav class="nav flex-column">
-      <a class="nav-link active" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Home"><i class="bi bi-house"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Get Started"><i class="bi bi-rocket-takeoff"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Apps"><i class="bi bi-grid"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Case Studies"><i class="bi bi-file-earmark-lock"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Find your Subscription"><i class="bi bi-box-seam"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="User Guides"><i class="bi bi-book"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="How-To-Videos"><i class="bi bi-lightbulb"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="FAQs"><i class="bi bi-question-circle"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="What's New"><i class="bi bi-megaphone"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Training Library"><i class="bi bi-collection-play"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Recorded Webinars"><i class="bi bi-camera-video"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Support"><i class="bi bi-headset"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-params-placement="right" title="Feedback"><i class="bi bi-star"></i></a>      
-    </nav>
-  </div>
   <div class="main-content">
     <div class="zenora-header">
       
@@ -489,10 +389,5 @@
       </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // This script now only initializes the tooltips for the sidebar
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el))
-  </script>
 </body>
 </html>
