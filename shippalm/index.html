@@ -20,70 +20,15 @@
       background-color: #f7f8fb; /* BRAND COLOR */
       font-family: "Rubik", sans-serif;
     }
-    /* Collapsed Sidebar */
-    .sidebar {
-      width: 74px; /* CHANGED: Adjusted width */
-      background-color: #003143; /* CHANGED: Darker BG */
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .sidebar .nav-link {
-      color: #CED4DA; 
-      font-weight: 500;
-      border-radius: 8px; /* CHANGED: Rounded block */
-      transition: all 0.3s ease;
-      font-size: 12px;
-      
-      /* CHANGED: Block styling */
-      width: 54px;
-      height: 50px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: row;
-      border-left: 4px solid transparent; /* For active state spacing */
-      margin-bottom: 8px; /* Add spacing between blocks */
-    }
-    .sidebar .nav-link i {
-      font-size: 22px; /* CHANGED: Adjusted icon size */
-      color: #CED4DA;
-      margin-bottom: 0; /* CHANGED: Removed margin */
-    }
-    .sidebar .nav-link:hover {
-      background-color: #8098a1; /* CHANGED: Hover block color */
-      color: #fff;
-    }
-    .sidebar .nav-link:hover i {
-      color: #fff;
-    }
 
-    /* ADDED: Active state styling */
-    .sidebar .nav-link.active {
-      background-color: #8098a1;
-      color: #fff;
-      border-left-color: #156e80; /* Active bar color */
-    }
-    .sidebar .nav-link.active i {
-      color: #fff;
-    }
-
-    /* Tooltip for sidebar names */
-    .sidebar .nav-link[data-bs-toggle="tooltip"] {
-      cursor: pointer;
-    }
-    /* Main content */
+    /* Main content - Updated to full width */
     .main-content {
-      margin-left: 94px; /* CHANGED: Adjusted margin */
+      margin-left: 0; /* REMOVED MARGIN LEFT */
       padding: 40px;
+      /* Add padding bottom to ensure content isn't hidden behind the floating button */
+      padding-bottom: 100px; 
     }
+    
     /* --- BRAND COLOR OVERRIDES --- */
     .main-content h2.text-primary {
       color: #003143 !important; /* BRAND COLOR */
@@ -143,6 +88,7 @@
       border: 1px solid #CED4DA;
       padding: 10px 15px;
       font-size: 14px;
+      transition: background-color 0.3s ease, color 0.3s ease; /* Added transition */
     }
     .search-bar button {
       border-radius: 50%;
@@ -156,6 +102,28 @@
       justify-content: center;
       font-size: 18px;
     }
+    
+    /* --- ADDED: Disabled search bar styling --- */
+    .search-bar input:disabled {
+      background-color: #fff; /* Keep original background */
+      border-color: #CED4DA; /* Keep original border */
+      opacity: 1; /* Override default disabled opacity */
+      cursor: not-allowed; /* Show 'not-allowed' cursor */
+    }
+    
+    /* This class will be added by JavaScript on hover */
+    .search-bar input.hover-effect {
+      background-color: #156e80; /* BRAND COLOR */
+      color: #fff; /* Make typed text (if any) white */
+    }
+    
+    /* Style placeholder text on hover */
+    .search-bar input.hover-effect::placeholder {
+      color: #fff;
+      opacity: 1; /* Ensure placeholder is fully visible */
+    }
+    /* --- END OF ADDED CSS --- */
+
     .zenora-intro {
       display: flex;
       align-items: flex-start;
@@ -186,6 +154,13 @@
       transform: translateY(-5px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
+    
+    /* ADDED: Cursor pointer for clickable cards */
+    #get-started-card, #apps-card, #userguide-card, 
+    #howtovideos-card, #faq-card, #whatsnew-card, #training-card {
+      cursor: pointer;
+    }
+    
     .card i {
       font-size: 32px;
       color: #003143; /* CHANGED: Dark brand color */
@@ -228,6 +203,8 @@
     .card-hover-content p {
       margin: 0; /* Remove default paragraph margin */
     }
+    
+    /* Don't hide on hover if it's a clickable card */
     .card-with-hover-text:hover .card-normal-content {
       /* On hover, hide the normal content */
       opacity: 0;
@@ -240,36 +217,144 @@
     }
     /* --- END OF CSS --- */
 
-    @media (max-width: 768px) {
-      .sidebar {
-        position: relative;
+    /* --- START CHATBOT WIDGET STYLES (Ported and Themed) --- */
+    .chatbot-btn { 
+        position: fixed; 
+        bottom: 20px; 
+        right: 20px; 
+        background-color: #156e80; /* BRAND COLOR */
+        color: white; 
+        border: none; 
+        border-radius: 50%; 
+        width: 60px; 
+        height: 60px; 
+        font-size: 24px; 
+        cursor: pointer; 
+        z-index: 1050;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .chatbot-btn:hover {
+        background-color: #003143;
+    }
+
+    .chatbot-container { 
+        position: fixed; 
+        bottom: 90px; 
+        right: 20px; 
+        width: 420px; 
+        background: white; 
+        border-radius: 12px; 
+        display: none; 
+        flex-direction: column; 
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15); 
+        z-index: 1050;
+        border: 1px solid #eee;
+    }
+    .chatbot-header { 
+        background: #156e80; /* BRAND COLOR */
+        color: white; 
+        padding: 15px; 
+        text-align: center; 
+        font-size: 16px; 
+        font-weight: 600; 
+        border-top-left-radius: 12px; 
+        border-top-right-radius: 12px;
+    }
+    .chatbot-body { 
+        padding: 15px; 
+        max-height: 400px; 
+        overflow-y: auto;
+    }
+    .chatbot-search-input {
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    /* Search Results for Chatbot */
+    .result {
+        display: block;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        margin-top: 8px;
+        border-radius: 6px;
+        transition: all 0.2s ease-in-out;
+        font-size: 13px;
+        cursor: pointer;
+        color: #333;
+    }
+    .result:hover {
+        background: #156e80;
+        color: #fff;
+        border-color: #156e80;
+        text-decoration: none;
+    }
+
+    /* Fullscreen Overlay for Chatbot Articles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 10px 0;
-      }
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+    .overlay-content {
+        background: white;
+        width: 90%; /* Increased slightly for better read */
+        height: 90%;
+        border-radius: 12px;
+        padding: 0; /* Remove padding to let iframe fill */
+        position: relative;
+        overflow: hidden; 
+    }
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        z-index: 10;
+        background-color: #156e80 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+        cursor: pointer !important;
+        transition: background-color 0.3s ease;
+    }
+    .close-btn:hover {
+        background-color: #003143 !important;
+    }
+    
+    /* Text bubble next to chatbot button */
+    .chatbot-hint {
+        position: fixed; 
+        bottom: 35px; 
+        right: 90px; 
+        font-size: 14px; 
+        font-weight: 600; 
+        color: #003143;
+        background: white;
+        padding: 5px 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1049;
+    }
+    /* --- END CHATBOT STYLES --- */
+    
+    @media (max-width: 768px) {
       .main-content {
-        margin-left: 0;
         padding: 20px;
-      }
-      .sidebar .nav-link {
-        flex-direction: column;
-        font-size: 10px;
-        padding: 5px 0;
-        /* Reset block styling for mobile */
-        width: auto; 
-        height: auto;
-        border-left: none;
-        background-color: transparent;
-      }
-      .sidebar .nav-link.active {
-         border-left: none;
-         background-color: #343a40; /* Keep active bg on mobile */
-      }
-      .sidebar .nav-link i {
-         font-size: 24px; /* Reset icon size */
-         margin-bottom: 4px; /* Add margin back */
       }
       .zenora-intro {
         flex-direction: column;
@@ -297,30 +382,23 @@
         opacity: 0;
         visibility: hidden;
       }
+      
+      .chatbot-container {
+        width: 90%;
+        right: 5%;
+        bottom: 90px;
+      }
+      .chatbot-hint {
+        display: none; /* Hide hint on mobile to save space */
+      }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <nav class="nav flex-column">
-      <a class="nav-link active" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Home"><i class="bi bi-house"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Get Started"><i class="bi bi-rocket-takeoff"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Apps"><i class="bi bi-grid"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Case Studies"><i class="bi bi-file-earmark-lock"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Find your Subscription"><i class="bi bi-box-seam"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="User Guides"><i class="bi bi-book"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="How-To-Videos"><i class="bi bi-lightbulb"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="FAQs"><i class="bi bi-question-circle"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="What's New"><i class="bi bi-megaphone"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Training Library"><i class="bi bi-collection-play"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Recorded Webinars"><i class="bi bi-camera-video"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Support"><i class="bi bi-headset"></i></a>
-      <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-params-placement="right" title="Feedback"><i class="bi bi-star"></i></a>      
-    </nav>
-  </div>
-  <div class="main-content">
+
+  <div class="main-content" id="main-content-area">
+    
     <div class="zenora-header">
-      
       <div class="header-buttons">
         <button class="btn btn-sm me-2">Updates</button>
         <button class="btn btn-sm">Help</button>
@@ -329,7 +407,7 @@
       <h1>Welcome to the ZN ShipPalm Learning Help Centre</h1>
       <p class="subtitle">Your central knowledge hub for ShipPalm</p>
       <div class="search-bar">
-        <input type="text" placeholder="Ask me anything..." />
+        <input type="text" placeholder="Ask me anything..." disabled />
         <button><i class="bi bi-robot"></i></button>
       </div>
       <div class="zenora-intro">
@@ -343,7 +421,7 @@
     <h2 class="fw-bold mb-4 text-primary">Explore Learning Resources</h2>
     <div class="row g-4">
       
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="get-started-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-rocket-takeoff"></i>
@@ -355,7 +433,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="apps-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-grid"></i>
@@ -367,31 +445,7 @@
         </div>
       </div>
 
-       <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card p-4 text-center card-with-hover-text">
-          <div class="card-normal-content">
-           <i class="bi bi-file-earmark-lock"></i>
-            <h5 class="card-title">Case Studies</h5>
-          </div>
-          <div class="card-hover-content">
-            <p>See real-world examples of how others solve problems using the product.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card p-4 text-center card-with-hover-text">
-          <div class="card-normal-content">
-            <i class="bi bi-box-seam"></i>
-            <h5 class="card-title">Find Your Subscription</h5>
-          </div>
-          <div class="card-hover-content">
-            <p>Understand your plan details and unlock the value of your package.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="userguide-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-book"></i>
@@ -403,7 +457,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="howtovideos-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-lightbulb"></i>
@@ -415,7 +469,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="faq-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-question-circle"></i>
@@ -427,7 +481,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="whatsnew-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-megaphone"></i>
@@ -439,7 +493,7 @@
         </div>
       </div>
      
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3" id="training-card">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
             <i class="bi bi-collection-play"></i>
@@ -450,19 +504,7 @@
           </div>
         </div>
       </div>
-    
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card p-4 text-center card-with-hover-text">
-          <div class="card-normal-content">
-            <i class="bi bi-camera-video"></i>
-            <h5 class="card-title">Recorded Webinars</h5>
-          </div>
-          <div class="card-hover-content">
-            <p>Revisit expert sessions and training at your own pace.</p>
-          </div>
-        </div>
-      </div>
-     
+   
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="card p-4 text-center card-with-hover-text">
           <div class="card-normal-content">
@@ -486,13 +528,310 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
+    
+  </div>
+  
+  <div class="chatbot-hint">Search Articles!</div>
+  <button class="chatbot-btn" onclick="toggleChatbot()">
+    <i class="bi bi-chat-text-fill"></i>
+  </button>
+
+  <div class="chatbot-container" id="chatbot">
+    <div class="chatbot-header">
+      Search Articles <i class="bi bi-search ms-1"></i>
+    </div>
+    <div class="chatbot-body">
+      <input type="text" id="searchInput" class="form-control chatbot-search-input mb-2" placeholder="Type keywords..." onkeyup="searchArticles()">
+      <div id="results" class="mt-2"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="articleOverlay">
+    <div class="overlay-content">
+     <button type="button" class="close-btn" onclick="closeOverlay()" aria-label="Close">&times;</button>
+      <iframe id="articleFrame" style="width:100%; height:100%; border: none; display: block; overflow: hidden;"></iframe>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
-    // This script now only initializes the tooltips for the sidebar
+    // --- 1. Initialize all Bootstrap tooltips ---
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el))
+
+    
+    // --- 2. Add hover effect for the DISABLED search bar ---
+    function initializeSearchHover() {
+      const searchBar = document.querySelector('.search-bar');
+      if (!searchBar) return; 
+      
+      const searchInput = searchBar.querySelector('input');
+      const originalPlaceholder = searchInput.placeholder;
+
+      searchBar.addEventListener('mouseenter', () => {
+        searchInput.placeholder = 'Coming soon';
+        searchInput.classList.add('hover-effect');
+      });
+
+      searchBar.addEventListener('mouseleave', () => {
+        searchInput.placeholder = originalPlaceholder;
+        searchInput.classList.remove('hover-effect');
+      });
+    }
+
+    // --- 3. Card Click Listeners (All paths verified) ---
+    function initializeCardClick() {
+        const getStartedCard = document.getElementById('get-started-card');
+        if (getStartedCard) {
+            getStartedCard.addEventListener('click', () => {
+                window.location.href = 'getstarted/getstarted.html';
+            });
+        }
+    }
+
+    function initializeAppsCardClick() {
+        const appsCard = document.getElementById('apps-card');
+        if (appsCard) {
+            appsCard.addEventListener('click', () => {
+                window.location.href = 'apps/apps.html';
+            });
+        }
+    }
+
+    function initializeUserGuideCardClick() {
+        const userGuideCard = document.getElementById('userguide-card');
+        if (userGuideCard) {
+            userGuideCard.addEventListener('click', () => {
+                window.location.href = 'userguide/userguide.html';
+            });
+        }
+    }
+    
+    function initializeHowToVideosCardClick() {
+        const howToVideosCard = document.getElementById('howtovideos-card');
+        if (howToVideosCard) {
+            howToVideosCard.addEventListener('click', () => {
+                window.location.href = 'howtovideos/howtovideos.html';
+            });
+        }
+    }
+    
+    function initializeFaqCardClick() {
+        const faqCard = document.getElementById('faq-card');
+        if (faqCard) {
+            faqCard.addEventListener('click', () => {
+                window.location.href = 'faqs/faqs.html';
+            });
+        }
+    }
+
+    function initializeWhatsNewCardClick() {
+        const whatsNewCard = document.getElementById('whatsnew-card');
+        if (whatsNewCard) {
+            whatsNewCard.addEventListener('click', () => {
+                window.location.href = 'whatsnew/whatsnew.html';
+            });
+        }
+    }
+
+    function initializeTrainingCardClick() {
+        const trainingCard = document.getElementById('training-card');
+        if (trainingCard) {
+            trainingCard.addEventListener('click', () => {
+                window.location.href = 'traininglibrary/traininglibrary.html';
+            });
+        }
+    }
+
+    // --- 4. Chatbot Search Logic ---
+    const articles = [
+        { title: "Creating Manual Purchase Request Transaction", keywords: "Creating Manual Purchase Request Transaction", url: "askme/shore/purchase/1. Creating Manual Purchase Request Transaction.html" },
+        { title: "Creating Vendor Tags", keywords: "Creating Vendor Tags", url: "askme/shore/purchase/2. Creating Vendor Tags.html" },
+        { title: "Creating a Purchase Request to Request for Quotation (RFQ)", keywords: "Creating a Purchase Request to Request for Quotation (RFQ)", url: "askme/shore/purchase/3. Creating a Purchase Request to Request for Quotation (RFQ).html" },
+        { title: "Creating Purchase Quotation in ERFQ Link", keywords: "Creating Purchase Quotation in ERFQ Link", url: "askme/shore/purchase/4. Creating Purchase Quotation in ERFQ Link.html" },
+        { title: "Creating Manual Purchase Quotation", keywords: "Creating Manual Purchase Quotation", url: "askme/shore/purchase/5. Creating Manual Purchase Quotation.html" },
+        { title: "Creating Quote to Comparison", keywords: "Creating Quote to Comparison", url: "askme/shore/purchase/6. Creating Quote to Comparison.html" },
+        { title: "Approving Quote to Comparison", keywords: "Approving Quote to Comparison", url: "askme/shore/purchase/7. Approving Quote to Comparison.html" },
+        { title: "Creating Purchase order based on Quote to comparison", keywords: "Creating Purchase order based on Quote to comparison", url: "askme/shore/purchase/8. Creating Purchase order based on Quote to comparison.html" },
+        { title: "Creating Purchase order based on purchase quotation", keywords: "Creating Purchase order based on purchase quotation", url: "askme/shore/purchase/9. Creating Purchase order based on purchase quotation.html" },
+        { title: "Creating Purchase order based on price catalog", keywords: "Creating Purchase order based on price catalog", url: "askme/shore/purchase/10. Creating Purchase order based on price catalog.html" },
+        { title: "Creating Purchase order based on purchase requisition", keywords: "Creating Purchase order based on purchase requisition", url: "askme/shore/purchase/11. Creating Purchase order based on purchase requisition.html" },
+        { title: "Creating Direct Purchase Order", keywords: "Creating Direct Purchase Order", url: "askme/shore/purchase/12. Creating Direct Purchase Order.html" },
+        { title: "Searching Retrieving a Purchase Order", keywords: "Searching Retrieving a Purchase Order", url: "askme/shore/purchase/13. Searching Retrieving a Purchase Order.html" },
+        { title: "Amending a Purchase Order", keywords: "Amending a Purchase Order", url: "askme/shore/purchase/14. Amending a Purchase Order.html" },
+        { title: "Acknowledging a Purchase Order", keywords: "Acknowledging a Purchase Order", url: "askme/shore/purchase/15. Acknowledging a Purchase Order.html" },
+        { title: "Requesting a Purchase Order Approval", keywords: "Requesting a Purchase Order Approval", url: "askme/shore/purchase/16. Requesting a Purchase Order Approval.html" },
+        { title: "Sending Reminder for Purchase Order Approval", keywords: "Sending Reminder for Purchase Order Approval", url: "askme/shore/purchase/17. Sending Reminder for Purchase Order Approval.html" },
+        { title: "Creating Manual FA2", keywords: "Creating Manual FA2", url: "askme/shore/purchase/18. Creating Manual FA2.html" },
+        { title: "Creating Transfer order", keywords: "Creating Transfer order", url: "askme/shore/purchase/19. Creating Transfer order.html" },
+        { title: "Creating Manual FA4", keywords: "Creating Manual FA4", url: "askme/shore/purchase/20. Creating Manual FA4.html" },
+        { title: "Creating Goods Receipt Transaction", keywords: "Creating Goods Receipt Transaction", url: "askme/shore/purchase/21. Creating Goods Receipt Transaction.html" },
+        { title: "Purchase Order Approval Process", keywords: "Purchase Order Approval Process", url: "askme/shore/purchase/22. Purchase Order Approval Process.html" },
+        { title: "Quote to Comparison Approval", keywords: "Quote to Comparison Approval", url: "askme/shore/purchase/23. Quote to Comparison Approval.html" },
+        { title: "Purchase Requisition cancellation", keywords: "Purchase Requisition cancellation", url: "askme/shore/purchase/24. Purchase Requisition cancellation.html" },
+        { title: "Accessing Purchase Quotes from Cue Card", keywords: "Accessing Purchase Quotes from Cue Card", url: "askme/shore/purchase/25. Accessing Purchase Quotes from Cue Card.html" },
+        { title: "Undo GRN Shore", keywords: "Undo GRN", url: "askme/shore/purchase/26. Undo GRN.html" },
+        { title: "QTC (Compare quotes and order update details)", keywords: "QTC (Compare quotes and order update details)", url: "askme/shore/purchase/28. QTC (Compare quotes and order update details).html" },
+        { title: "Activation of pending jobs at shore", keywords: "Activation of pending jobs at shore", url: "askme/shore/pms/1. Activation of pending jobs at shore.html" },
+        { title: "How to Create and Submit Non-Conformities Report", keywords: "How to Create and Submit Non-Conformities Report", url: "askme/shore/hseq/1. How to Create and Submit Non-Conformities Report.html" },
+        { title: "Accident Report", keywords: "Accident Report", url: "askme/shore/hseq/2. Accident Report.html" },
+        { title: "How to Create and submit Best Practice Report", keywords: "How to Create and submit Best Practice Report", url: "askme/shore/hseq/3. How to Create and submit Best Practice Report.html" },
+        { title: "How to Create and submit Suggestion for Improvement Report (SFI)", keywords: "How to Create and submit Suggestion for Improvement Report (SFI)", url: "askme/shore/hseq/4. How to Create and submit Suggestion for Improvement Report (SFI).html" },
+        { title: "How to Create and Submit Near Miss Report", keywords: "How to Create and Submit Near Miss Report", url: "askme/shore/hseq/5. How to Create and Submit Near Miss Report.html" },
+        { title: "How to create Risk Assessment", keywords: "How to create Risk Assessment", url: "askme/shore/hseq/6. How to create Risk Assessment.html" },
+        { title: "Permit to work", keywords: "Permit to work", url: "askme/shore/hseq/7. Permit to work.html" },
+        { title: "How to Create an Internal Inspection Report", keywords: "How to Create an Internal Inspection Report", url: "askme/shore/hseq/8. How to Create an Internal Inspection Report.html" },
+        { title: "How to Create an External Inspection Report", keywords: "How to Create an External Inspection Report", url: "askme/shore/hseq/9. How to Create an External Inspection Report.html" },
+        { title: "How to Create an Internal Inspection Audit", keywords: "How to Create an Internal Inspection Audit", url: "askme/shore/hseq/10. How to Create an Internal Inspection Audit.html" },
+        { title: "How to Create an External Inspection Audit", keywords: "How to Create an External Inspection Audit", url: "askme/shore/hseq/11. How to Create an External Inspection Audit.html" },
+        { title: "TMSA Audit", keywords: "TMSA Audit", url: "askme/shore/hseq/12. TMSA Audit.html" },
+        { title: "Handover Reports", keywords: "Handover Reports", url: "askme/shore/hseq/13. Handover Reports.html" },
+        { title: "Takeover Reports", keywords: "Takeover Reports", url: "askme/shore/hseq/14. Takeover Reports.html" },
+        { title: "How to Create Safety meeting Report", keywords: "How to Create Safety meeting Report", url: "askme/shore/hseq/15. How to Create Safety meeting Report.html" },
+        { title: "Surveys - Types", keywords: "Surveys - Types", url: "askme/shore/certificate/1. Surveys - Types.html" },
+        { title: "Due Date for each type of Surveys", keywords: "Due Date for each type of Surveys", url: "askme/shore/certificate/2. Due Date for each type of Surveys.html" },
+        { title: "Recording and closing of deviations for certificates", keywords: "Recording and closing of deviations for certificates", url: "askme/shore/certificate/3. Recording and closing of deviations for certificates.html" },
+        { title: "How to approve vessel Certificate", keywords: "How to approve vessel Certificate", url: "askme/shore/certificate/4. How to approve vessel Certificate.html" },
+        { title: "Survey-Closure", keywords: "Survey-Closure", url: "askme/shore/certificate/5. Survey-Closure.html" },
+        { title: "How to Create office Certificate", keywords: "How to Create office Certificate", url: "askme/shore/certificate/6. How to Create office Certificate.html" },
+        { title: "Creating Requisition worksheet-based purchase Request", keywords: "Creating Requisition worksheet-based purchase Request", url: "askme/ship/purchase/2. Creating Requisition worksheet-based purchase Request.html" },
+        { title: "Creating work order-based service request", keywords: "Creating work order-based service request", url: "askme/ship/purchase/3. Creating work order-based service request.html" },
+        { title: "Searching Retrieving a Purchase Order", keywords: "Searching Retrieving a Purchase Order", url: "askme/ship/purchase/4. Searching Retrieving a Purchase Order.html" },
+        { title: "Force Closing a Purchase Order for a partially delivered purchase Request", keywords: "Force Closing a Purchase Order for a partially delivered purchase Request", url: "askme/ship/purchase/5. Force Closing a Purchase Order for a partially delivered purchase Request.html" },
+        { title: "Creating a Goods Receipt Transaction", keywords: "Creating a Goods Receipt Transaction", url: "askme/ship/purchase/6. Creating a Goods Receipt Transaction.html" },
+        { title: "Printing GRN labels", keywords: "Printing GRN labels", url: "askme/ship/purchase/7. Printing GRN labels.html" },
+        { title: "Updating Inventory for local purchase items", keywords: "Updating Inventory for local purchase items", url: "askme/ship/purchase/8. Updating Inventory for local purchase items.html" },
+        { title: "Stock Adjustment Transaction", keywords: "Stock Adjustment Transaction", url: "askme/ship/purchase/9. Stock Adjustment Transaction.html" },
+        { title: "Purchase Requisition Statuses", keywords: "Purchase Requisition Statuses", url: "askme/ship/purchase/10. Purchase Requisition Statuses.html" },
+        { title: "Purchase Requisition Approval", keywords: "Purchase Requisition Approval", url: "askme/ship/purchase/12. Purchase Requisition Approval.html" },
+        { title: "Undo GRN Ship", keywords: "Undo GRN", url: "askme/ship/purchase/14. Undo GRN.html" },
+        { title: "Reporting Periodic work order-Calender based", keywords: "Reporting Periodic work order-Calender based", url: "askme/ship/pms/1. Reporting Periodic work order-Calender based.html" },
+        { title: "Reporting Periodic work order-Counter based", keywords: "Reporting Periodic work order-Counter based", url: "askme/ship/pms/2. Reporting Periodic work order-Counter based.html" },
+        { title: "Reporting of TMDS work orders", keywords: "Reporting of TMDS work orders", url: "askme/ship/pms/3. Reporting of TMDS work orders.html" },
+        { title: "Reporting of Defect work orders", keywords: "Reporting of Defect work orders", url: "askme/ship/pms/4. Reporting of Defect work orders.html" },
+        { title: "Creating of Non Periodic Work Orders", keywords: "Creating of Non Periodic Work Orders", url: "askme/ship/pms/5. Creating of Non Periodic Work Orders.html" },
+        { title: "Reporting of Non-Periodic work Orders", keywords: "Reporting of Non-Periodic work Orders", url: "askme/ship/pms/6. Reporting of Non-Periodic work Orders.html" },
+        { title: "How to Request Deferment for Work Orders", keywords: "How to Request Deferment for Work Orders", url: "askme/ship/pms/7. How to Request Deferment for Work Orders.html" },
+        { title: "How to Close Periodic Work Orders", keywords: "How to Close Periodic Work Orders", url: "askme/ship/pms/8. How to Close Periodic Work Orders.html" },
+        { title: "How to Close Non-Periodic work Orders - Copy", keywords: "How to Close Non-Periodic work Orders - Copy", url: "askme/ship/pms/9. How to Close Non-Periodic work Orders - Copy.html" },
+        { title: "Activation of pending jobs at ship", keywords: "Activation of pending jobs at ship", url: "askme/ship/pms/10. Activation of pending jobs at ship.html" },
+        { title: "How to Create and Submit Non-Conformities Report", keywords: "How to Create and Submit Non-Conformities Report", url: "askme/ship/hseq/1. How to Create and Submit Non-Conformities Report.html" },
+        { title: "Accident Report", keywords: "Accident Report", url: "askme/ship/hseq/2. Accident Report.html" },
+        { title: "How to Create and submit Best Practice Report", keywords: "How to Create and submit Best Practice Report", url: "askme/ship/hseq/3. How to Create and submit Best Practice Report.html" },
+        { title: "How to Create and submit Suggestion for Improvement Report (SFI)", keywords: "How to Create and submit Suggestion for Improvement Report (SFI)", url: "askme/ship/hseq/4. How to Create and submit Suggestion for Improvement Report (SFI).html" },
+        { title: "How to Create and Submit Near Miss Report", keywords: "How to Create and Submit Near Miss Report", url: "askme/ship/hseq/5. How to Create and Submit Near Miss Report.html" },
+        { title: "Zero Harm Safety Observation Report", keywords: "Zero Harm Safety Observation Report", url: "askme/ship/hseq/6. Zero Harm Safety Observation Report.html" },
+        { title: "How to create Risk Assessment", keywords: "How to create Risk Assessment", url: "askme/ship/hseq/7. How to create Risk Assessment.html" },
+        { title: "Permit to work", keywords: "Permit to work", url: "askme/ship/hseq/8. Permit to work.html" },
+        { title: "How to Create an Internal Inspection Report", keywords: "How to Create an Internal Inspection Report", url: "askme/ship/hseq/9. How to Create an Internal Inspection Report.html" },
+        { title: "How to Create an External Inspection Report", keywords: "How to Create an External Inspection Report", url: "askme/ship/hseq/10. How to Create an External Inspection Report.html" },
+        { title: "How to Create an Internal Inspection Audit", keywords: "How to Create an Internal Inspection Audit", url: "askme/ship/hseq/11. How to Create an Internal Inspection Audit.html" },
+        { title: "How to Create an External Inspection Audit", keywords: "How to Create an External Inspection Audit", url: "askme/ship/hseq/12. How to Create an External Inspection Audit.html" },
+        { title: "Ackknowledge Broadcast", keywords: "Ackknowledge Broadcast", url: "askme/ship/hseq/13. Ackknowledge Broadcast.html" },
+        { title: "Handover Reports", keywords: "Handover Reports", url: "askme/ship/hseq/14. Handover Reports.html" },
+        { title: "Takeover Reports", keywords: "Takeover Reports", url: "askme/ship/hseq/15. Takeover Reports.html" },
+        { title: "How to Create Safety meeting Report", keywords: "How to Create Safety meeting Report", url: "askme/ship/hseq/16. How to Create Safety meeting Report.html" },
+        { title: "How to Create Vessel Certificate", keywords: "How to Create Vessel Certificate", url: "askme/ship/certificate/1. How to Create Vessel Certificate.html" },
+        { title: "How to Renew Vessel Certiicate", keywords: "How to Renew Vessel Certiicate", url: "askme/ship/certificate/2. How to Renew Vessel Certiicate.html" },
+        { title: "Attachments-Certificates", keywords: "Attachments-Certificates", url: "askme/ship/certificate/3. Attachments-Certificates.html" },
+        { title: "Survey-Extension", keywords: "Survey-Extension", url: "askme/ship/certificate/4. Survey-Extension.html" },
+        { title: "Request for Extension of Deviation", keywords: "Request for Extension of Deviation", url: "askme/ship/certificate/5. Request for Extension of Deviation.html" },
+        { title: "Creation of Occasional survey for certificates", keywords: "Creation of Occasional survey for certificates", url: "askme/ship/certificate/8. Creation of Occasional survey for certificates.html" },
+        { title: "Bulkdownload Certificates Survey", keywords: "Bulkdownload Certificates Survey", url: "askme/ship/certificate/9. Bulkdownload Certificates Survey.html" },
+    ];
+
+    function toggleChatbot() {
+        let chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
+        // Focus input when opening
+        if(chatbot.style.display === "flex") {
+            document.getElementById('searchInput').focus();
+        }
+    }
+
+    function searchArticles() {
+        let input = document.getElementById('searchInput').value.toLowerCase().trim();
+        let resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = "";
+
+        if (input.length === 0) return;
+
+        let searchWords = input.split(/\s+/);
+
+        let foundResults = articles.filter(article => {
+            let keywords = article.keywords.toLowerCase();
+            if (keywords.includes(input)) return true;
+            return searchWords.some(word => keywords.includes(word));
+        });
+
+        if (foundResults.length === 0) {
+            resultsDiv.innerHTML = "<p class='text-muted text-center small mt-2'>No matching articles found.</p>";
+            return;
+        }
+
+        foundResults.forEach(article => {
+            let linkDiv = document.createElement("div");
+            linkDiv.innerHTML = article.title;
+            linkDiv.className = "result";
+            linkDiv.onclick = () => openOverlay(article.url);
+            resultsDiv.appendChild(linkDiv);
+        });
+    }
+
+    function openOverlay(url) {
+        const overlay = document.getElementById('articleOverlay');
+        const iframe = document.getElementById('articleFrame');
+        if (!overlay || !iframe) return;
+
+        // Reset iframe height logic
+        iframe.onload = function() {
+            try {
+                // Attempt to auto-resize (works only for same-origin)
+                const contentDoc = iframe.contentWindow.document;
+                const body = contentDoc.body;
+                const html = contentDoc.documentElement;
+
+                if (body) {
+                    body.style.margin = '0';
+                    body.style.padding = '0';
+                    // Allow scroll inside the iframe if content is long
+                    body.style.overflow = 'auto'; 
+                }
+            } catch (e) {
+                // Cross-origin restriction or other error; 
+                // Default CSS handles 100% height
+                console.log("Iframe load handled");
+            }
+        };
+
+        iframe.src = 'about:blank';
+        setTimeout(() => {
+            iframe.src = url;
+            overlay.style.display = "flex";
+        }, 0);
+    }
+
+    function closeOverlay() {
+        const overlay = document.getElementById('articleOverlay');
+        const iframe = document.getElementById('articleFrame');
+        if (overlay) overlay.style.display = "none";
+        if (iframe) {
+            iframe.src = ""; // Clear src
+            iframe.onload = null; 
+        }
+    }
+
+    // --- 5. Run all scripts on page load ---
+    initializeSearchHover();
+    initializeCardClick();
+    initializeAppsCardClick();
+    initializeUserGuideCardClick();
+    initializeHowToVideosCardClick();
+    initializeFaqCardClick();
+    initializeWhatsNewCardClick();
+    initializeTrainingCardClick();
   </script>
+  
 </body>
 </html>
